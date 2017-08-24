@@ -397,11 +397,12 @@ void do_serial() {
       PH_val = readings[1];
       ORP_val = readings[0];
       //drawEZO();
-      terminal.print(currentTime);
-      terminal.print(" : ");
-      terminal.println(PH_val + "\n" + ORP_val + "\n");
-      Serial.println(PH_val + " " + ORP_val);
+      
     }
+    terminal.print(currentTime);
+    terminal.print(" : ");
+    terminal.println("pH: " + PH_val + "ORP: " + ORP_val);
+    Serial.println(PH_val + " " + ORP_val);
   //  next_serial_time = millis() + send_readings_every;
   //}
 }
