@@ -172,7 +172,7 @@ void setup() {
   timer.setInterval (500L, Sent_serial); // check to see if anything to send from hardware serial to Blynk terminal
   timer.setInterval(10000L, requestTime); // sync time with Blynk rtc
   timer.setInterval(15000L, reconnectBlynk); // check to see if we are still connected to Blynk
-  timer.setInterval (10000L, updateData); // update sensors
+  timer.setInterval (30000L, updateData); // update sensors
 }
 
 /***********************************************************************************************
@@ -401,7 +401,7 @@ void do_serial() {
     }
     terminal.print(currentTime);
     terminal.print(" : ");
-    terminal.println("pH: " + PH_val + "ORP: " + ORP_val);
+    terminal.println("pH: " + PH_val + "  ORP: " + ORP_val);
     Serial.println(PH_val + " " + ORP_val);
   //  next_serial_time = millis() + send_readings_every;
   //}
@@ -443,8 +443,7 @@ void send_command() {
   Blynk.run();
   delay(1000);
   Blynk.run();
-  delay(1000);
-  Blynk.run();
+  // Maybe use a no update sensor routine? ie set noUpdate = true and in sensor routine use as condition.
   terminal.println("Requesting reply\n");
   sensor_bytes_received = 0;                        // reset data counter
   memset(sensordata, 0, sizeof(sensordata));        // clear sensordata array;
