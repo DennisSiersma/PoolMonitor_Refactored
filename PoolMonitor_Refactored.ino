@@ -164,14 +164,15 @@ void setup() {
    ArduinoOTA.begin();
    terminal.println("OTA Ready");
    
+   
 /***********************************************************************************************
  * Setup timers                                                                                *     
  ***********************************************************************************************/
   timer.setInterval (5000L, heartbeat);  // Draw time
   timer.setInterval (500L, Sent_serial); // check to see if anything to send from hardware serial to Blynk terminal
   timer.setInterval(10000L, requestTime); // sync time with Blynk rtc
-  timer.setInterval(12000L, reconnectBlynk); // check to see if we are still connected to Blynk
-  timer.setInterval (15000L, updateData); // update sensors
+  timer.setInterval(15000L, reconnectBlynk); // check to see if we are still connected to Blynk
+  timer.setInterval (10000L, updateData); // update sensors
 }
 
 /***********************************************************************************************
@@ -182,6 +183,7 @@ void requestTime() {
   
   currentTime = String(hour()) + ":" + minute() + ":" + second();
   currentDate = String(day()) + " " + month() + " " + year();
+  //terminal.println(currentTime);
 }
 /***********************************************************************************************
  * Serial interupt    (debugging)                                                              *     
@@ -283,6 +285,7 @@ void updateData() {
  * drawData                                                                                       *     
  ***********************************************************************************************/
 void drawData() {
+  tft.fillScreen(TFT_BLACK);
   drawEZO();
   }
 /***********************************************************************************************
@@ -311,6 +314,7 @@ void drawTime() {
 }
  
 void drawEZO() {
+  tft.fillScreen(TFT_BLACK);
   tft.setTextFont(2);
   tft.setTextSize(2);           // We are using a size multiplier of 1
   tft.setCursor(30, 10);    // Set cursor to x = 30, y = 175
@@ -384,7 +388,7 @@ void drawEZO() {
 // do serial communication in a "asynchronous" way
 
 void do_serial() {
-  if (millis() >= next_serial_time) {                // is it time for the next serial communication?
+  //if (millis() >= next_serial_time) {                // is it time for the next serial communication?
     for (int i = 0; i < TOTAL_CIRCUITS; i++) {       // loop through all the sensors
       Serial.print(channel_names[i]);                // print channel name
       Serial.print(":\t");
@@ -396,8 +400,8 @@ void do_serial() {
       terminal.println(PH_val + "\n" + ORP_val + "\n");
       Serial.println(PH_val + " " + ORP_val);
     }
-    next_serial_time = millis() + send_readings_every;
-  }
+  //  next_serial_time = millis() + send_readings_every;
+  //}
 }
 
 
@@ -612,6 +616,7 @@ BLYNK_WRITE(InternalPinRTC) {
   Serial.print("Synced RTC, Unix time: ");
   Serial.print(t);
   Serial.println();
+  setTime(t);
 }
 
 /***********************************************************************************************
