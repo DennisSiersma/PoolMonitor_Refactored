@@ -78,8 +78,8 @@ TFT_ILI9341_ESP tft = TFT_ILI9341_ESP();       // Invoke custom library
 
 String inputString = "";
 
-String currentTime = "Syncing.."
-String currentDate = "Syncing.."
+String currentTime = "Syncing..";
+String currentDate = "Syncing..";
 // flags used to switch between cloud and local Blynk server
 //bool cloud_server_active = true;
 //bool local_server_active = false;
