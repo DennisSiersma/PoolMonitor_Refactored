@@ -211,7 +211,8 @@ void heartbeat()
   Serial.println (n);
   n++;
   Blynk.virtualWrite(V0, n);  // Set a valuewidget to see heartbeat
-  drawTime();
+  //drawTime();
+  drawEZO();
   }
 }
 
@@ -292,24 +293,24 @@ void drawData() {
  ***********************************************************************************************/
 void drawTime() {
   //tft.setFreeFont(&ArialRoundedMTBold_14);
-  tft.setTextFont(2);
-  
-  tft.setTextDatum(BC_DATUM);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  //tft.setTextPadding(tft.textWidth(" Ddd, 44 Mmm 4444 "));  // String width + margin
-  tft.drawString(currentDate, 120, 14);
-
-  //tft.setFreeFont(&ArialRoundedMTBold_36);
-  tft.setTextFont(2);
-  
-  tft.setTextDatum(BC_DATUM);
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  //tft.setTextPadding(tft.textWidth(" 44:44:44 "));  // String width + margin
-  tft.drawString(currentTime, 120, 50);
-
-  drawSeparator(70);
-  drawSeparator(153);
-  tft.setTextPadding(0);
+//  tft.setTextFont(2);
+//  
+//  tft.setTextDatum(BC_DATUM);
+//  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+//  tft.setTextPadding(tft.textWidth(" Ddd, 44 Mmm 4444 "));  // String width + margin
+//  tft.drawString(currentDate, 120, 14);
+//
+//  //tft.setFreeFont(&ArialRoundedMTBold_36);
+//  tft.setTextFont(2);
+//  
+//  tft.setTextDatum(BC_DATUM);
+//  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+//  tft.setTextPadding(tft.textWidth(" 44:44:44 "));  // String width + margin
+//  tft.drawString(currentTime, 120, 50);
+//
+//  drawSeparator(70);
+//  drawSeparator(153);
+//  tft.setTextPadding(0);
 }
  
 void drawEZO() {
@@ -321,20 +322,36 @@ void drawEZO() {
 //  tft.println(currentTime);
   
   //Title
-  //tft.setFreeFont(&ArialRoundedMTBold_36);
   tft.setTextFont(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_BLUE, TFT_BLACK);
-  //tft.setTextPadding(tft.textWidth("Pool Monitor"));
-  tft.drawString("Pool Monitor", 120, 200 - 2);
+  tft.setTextPadding(tft.textWidth("Pool Monitor"));
+  tft.drawString("Pool Monitor", 120, 14);
 
+  tft.setTextFont(2);
+  tft.setTextDatum(BC_DATUM);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextPadding(tft.textWidth(" Ddd, 44 Mmm 4444 "));  // String width + margin
+  tft.drawString(currentDate, 120, 50);
+
+  
+  tft.setTextFont(2);
+  tft.setTextDatum(BC_DATUM);
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  tft.setTextPadding(tft.textWidth(" 44:44:44 "));  // String width + margin
+  tft.drawString(currentTime, 120, 90);
+
+  drawSeparator(70);
+  drawSeparator(120);
+  tft.setTextPadding(0);
+  
   //TEMP
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
   tft.setTextPadding(0); // Reset padding width to none
   tft.drawString("Temp ", 0, 240);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  //tft.setTextPadding(tft.textWidth("-88.00`"));
+  tft.setTextPadding(tft.textWidth("-88.00`"));
   //if (TEMP_val.indexOf(".")) TEMP_val = TEMP_val.substring(0, TEMP_val.indexOf(".") + 1); // Make it .1 precision
   if (TEMP_val == "") TEMP_val = "?";  // Handle null return
   tft.drawString(TEMP_val + "`", 221, 240);
@@ -357,7 +374,7 @@ void drawEZO() {
   tft.drawString("PH", 0, 280);
   tft.setTextDatum(BL_DATUM);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  //tft.setTextPadding(tft.textWidth(" 3.777 "));
+  tft.setTextPadding(tft.textWidth(" 3.777 "));
   tft.drawString(PH_val, 221, 280);
   Blynk.virtualWrite (V2, PH_val);
 
@@ -368,11 +385,11 @@ void drawEZO() {
   tft.drawString("ORP", 0, 315);
   //tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  //tft.setTextPadding(tft.textWidth("200.3"));
+  tft.setTextPadding(tft.textWidth("200.3"));
   tft.drawString(ORP_val, 220, 315);
   tft.setTextDatum(BL_DATUM);
-  //tft.setTextPadding(0);
-  //tft.setFreeFont(&ArialRoundedMTBold_14);
+  tft.setTextPadding(0);
+  
   tft.setTextFont(2);
   tft.drawString("mV", 221, 310);
   Blynk.virtualWrite (V3, ORP_val);
@@ -401,7 +418,7 @@ void do_serial() {
     terminal.print(" : ");
     terminal.println("pH: " + PH_val + "  ORP: " + ORP_val);
     Serial.println(PH_val + " " + ORP_val);
-    drawEZO();
+    
   //  next_serial_time = millis() + send_readings_every;
   //}
 }
