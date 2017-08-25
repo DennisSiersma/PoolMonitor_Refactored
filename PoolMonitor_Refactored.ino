@@ -80,9 +80,7 @@ String inputString = "";
 
 String currentTime = "Syncing..";
 String currentDate = "Syncing..";
-// flags used to switch between cloud and local Blynk server
-//bool cloud_server_active = true;
-//bool local_server_active = false;
+
 int n = 0; //counter for heartbeat
 
 /***********************************************************************************************
@@ -96,8 +94,7 @@ void setup() {
   Serial.println("\n Starting");
   Wire.begin();                                                               // enable I2C port.
   sensors.begin();                                                            // IC Default 9 bit. If you have troubles consider upping it 12. Ups the delay giving the IC more time to process the temperature measurement
-  //next_serial_time = millis() + send_readings_every;                          // calculate the next point in time we should do serial communications
-
+  
   tft.begin();
   tft.setRotation(2);
   tft.fillScreen(TFT_BLACK);
