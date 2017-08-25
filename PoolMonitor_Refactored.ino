@@ -78,9 +78,8 @@ TFT_ILI9341_ESP tft = TFT_ILI9341_ESP();       // Invoke custom library
 
 String inputString = "";
 
-String currentTime = String(hour()) + ":" + minute() + ":" + second();
-String currentDate = String(day()) + " " + month() + " " + year();
-
+String currentTime = "Syncing.."
+String currentDate = "Syncing.."
 // flags used to switch between cloud and local Blynk server
 //bool cloud_server_active = true;
 //bool local_server_active = false;
@@ -172,7 +171,7 @@ void setup() {
   timer.setInterval (500L, Sent_serial); // check to see if anything to send from hardware serial to Blynk terminal
   timer.setInterval(10000L, requestTime); // sync time with Blynk rtc
   timer.setInterval(15000L, reconnectBlynk); // check to see if we are still connected to Blynk
-  timer.setInterval (10000L, updateData); // update sensors
+  timer.setInterval (30000L, updateData); // update sensors
 }
 
 /***********************************************************************************************
@@ -314,12 +313,12 @@ void drawTime() {
 }
  
 void drawEZO() {
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextFont(2);
-  tft.setTextSize(2);           // We are using a size multiplier of 1
-  tft.setCursor(30, 10);    // Set cursor to x = 30, y = 175
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text colour to white and background to black
-  tft.println(currentTime);
+//  tft.fillScreen(TFT_BLACK);
+//  tft.setTextFont(2);
+//  tft.setTextSize(2);           // We are using a size multiplier of 1
+//  tft.setCursor(30, 10);    // Set cursor to x = 30, y = 175
+//  tft.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text colour to white and background to black
+//  tft.println(currentTime);
   
   //Title
   //tft.setFreeFont(&ArialRoundedMTBold_36);
@@ -341,7 +340,6 @@ void drawEZO() {
   tft.drawString(TEMP_val + "`", 221, 240);
   tft.setTextDatum(BL_DATUM);
   tft.setTextPadding(0);
-  //tft.setFreeFont(&ArialRoundedMTBold_14);
   tft.setTextFont(2);
   tft.drawString("C ", 221, 220);
   Blynk.virtualWrite (V1, TEMP_val);
@@ -397,11 +395,13 @@ void do_serial() {
       PH_val = readings[1];
       ORP_val = readings[0];
       //drawEZO();
-      terminal.print(currentTime);
-      terminal.print(" : ");
-      terminal.println(PH_val + "\n" + ORP_val + "\n");
-      Serial.println(PH_val + " " + ORP_val);
+      
     }
+    terminal.print(currentTime);
+    terminal.print(" : ");
+    terminal.println("pH: " + PH_val + "  ORP: " + ORP_val);
+    Serial.println(PH_val + " " + ORP_val);
+    drawEZO();
   //  next_serial_time = millis() + send_readings_every;
   //}
 }
@@ -442,8 +442,7 @@ void send_command() {
   Blynk.run();
   delay(1000);
   Blynk.run();
-  delay(1000);
-  Blynk.run();
+  // Maybe use a no update sensor routine? ie set noUpdate = true and in sensor routine use as condition.
   terminal.println("Requesting reply\n");
   sensor_bytes_received = 0;                        // reset data counter
   memset(sensordata, 0, sizeof(sensordata));        // clear sensordata array;
