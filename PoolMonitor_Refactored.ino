@@ -1,9 +1,30 @@
-// This code uses wifi manageer to autoselect a pre-saved Access point or use captive portal 
-// it also allows you to swtich between local and cloud server's
+/**The MIT License (MIT)
+  Copyright (c) 2015 by Daniel Eichhorn
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYBR_DATUM HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+  
 
-// todo:
-// - try auto switchover based on connection attempts
-// 
+  tft lib Adapted by Bodmer to use the faster TFT_ILI9341_ESP library:
+  https://github.com/Bodmer/TFT_ILI9341_ESP
+
+  Parts of PH and EZO code taken from WhiteBox Labs -- Tentacle Shield -- examples
+
+  Adapted by DJS to be used as pool monitor 2017, including PH and ORP sensors
+  and water temperature.
+*/
 
 #define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
@@ -633,9 +654,12 @@ BLYNK_WRITE(V17){
     send_command();  
       }
 } 
-BLYNK_WRITE(V18){
+BLYNK_WRITE(V100){
+    int rst = param.asInt(); // Get the state of the VButton
+    if (rst == 1) {
     terminal.println("Sending reset command to ESP ");
     ESP.reset();
+    }
 } 
 BLYNK_WRITE(InternalPinRTC) {
   long t = param.asLong();
