@@ -311,7 +311,7 @@ void drawTime() {
 }
  
 void drawEZO() {
-//  tft.fillScreen(TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
 //  tft.setTextFont(2);
 //  tft.setTextSize(2);           // We are using a size multiplier of 1
 //  tft.setCursor(30, 10);    // Set cursor to x = 30, y = 175
@@ -320,42 +320,47 @@ void drawEZO() {
   
   //Title
   tft.setTextFont(2);
+  tft.setTextSize(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_BLUE, TFT_BLACK);
   tft.setTextPadding(tft.textWidth("Pool Monitor"));
-  tft.drawString("Pool Monitor", 120, 14);
+  tft.drawString("Pool Monitor", 120, 20);
 
-  tft.setTextFont(2);
-  tft.setTextDatum(BC_DATUM);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  tft.setTextPadding(tft.textWidth(" Ddd, 44 Mmm 4444 "));  // String width + margin
-  tft.drawString(currentDate, 120, 50);
+//  tft.setTextFont(2);
+//  tft.setTextSize(2);
+//  tft.setTextDatum(BC_DATUM);
+//  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+//  tft.setTextPadding(tft.textWidth(" Ddd, 44 Mmm 4444 "));  // String width + margin
+//  tft.drawString(currentDate, 120, 60);
 
   
   tft.setTextFont(2);
+  tft.setTextSize(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.setTextPadding(tft.textWidth(" 44:44:44 "));  // String width + margin
-  tft.drawString(currentTime, 120, 90);
+  //tft.setTextPadding(tft.textWidth(" 44:44:44 "));  // String width + margin
+  tft.drawString(currentTime, 120, 70);
 
-  drawSeparator(70);
-  drawSeparator(120);
+  drawSeparator(30);
+  drawSeparator(180);
   tft.setTextPadding(0);
   
   //TEMP
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
   tft.setTextPadding(0); // Reset padding width to none
+  tft.setTextSize(2);
   tft.drawString("Temp ", 0, 240);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextPadding(tft.textWidth("-88.00`"));
   //if (TEMP_val.indexOf(".")) TEMP_val = TEMP_val.substring(0, TEMP_val.indexOf(".") + 1); // Make it .1 precision
   if (TEMP_val == "") TEMP_val = "?";  // Handle null return
-  tft.drawString(TEMP_val + "`", 221, 240);
+  tft.drawString(TEMP_val, 200, 240);
   tft.setTextDatum(BL_DATUM);
   tft.setTextPadding(0);
   tft.setTextFont(2);
-  tft.drawString("C ", 221, 220);
+  tft.setTextSize(1);
+  tft.drawString("C ", 221, 240);
   Blynk.virtualWrite (V1, TEMP_val);
   //tft.setTextDatum(MR_DATUM);
   //tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -365,30 +370,32 @@ void drawEZO() {
   //PH
   //tft.setFreeFont(&ArialRoundedMTBold_36);
   tft.setTextFont(2);
+  tft.setTextSize(2);
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
   tft.setTextPadding(0); // Reset padding width to none
   tft.drawString("PH", 0, 280);
   tft.setTextDatum(BL_DATUM);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  tft.setTextPadding(tft.textWidth(" 3.777 "));
-  tft.drawString(PH_val, 221, 280);
+  //tft.setTextPadding(tft.textWidth(" 3.777 "));
+  tft.drawString(PH_val, 200, 280);
   Blynk.virtualWrite (V2, PH_val);
 
   //ORP
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
+  tft.setTextSize(2);
   tft.setTextPadding(0); // Reset padding width to none
   tft.drawString("ORP", 0, 315);
-  //tft.setTextDatum(BR_DATUM);
+  tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  tft.setTextPadding(tft.textWidth("200.3"));
-  tft.drawString(ORP_val, 220, 315);
+  //tft.setTextPadding(tft.textWidth("200.3"));
+  tft.drawString(ORP_val, 200, 315);
   tft.setTextDatum(BL_DATUM);
   tft.setTextPadding(0);
-  
-  tft.setTextFont(2);
-  tft.drawString("mV", 221, 310);
+    tft.setTextFont(2);
+  tft.setTextSize(1);
+  tft.drawString("mV", 230, 310);
   Blynk.virtualWrite (V3, ORP_val);
   //Cleanup for next string
   tft.setTextPadding(0); // Reset padding width to none
