@@ -319,7 +319,7 @@ void drawEZO() {
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_BLUE, TFT_BLACK);
   tft.setTextPadding(tft.textWidth("Pool Monitor"));
-  tft.drawString("Pool Monitor", 120, 20);
+  tft.drawString("Pool Monitor", 120, 25);
 
 //  tft.setTextFont(2);
 //  tft.setTextSize(2);
@@ -335,7 +335,7 @@ void drawEZO() {
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
   //tft.setTextPadding(tft.textWidth(" 44:44:44 "));  // String width + margin
-  tft.drawString(currentTime, 120, 70);
+  tft.drawString(currentTime, 120, 75);
 
   drawSeparator(25);
   drawSeparator(180);
