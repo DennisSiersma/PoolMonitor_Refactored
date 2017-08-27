@@ -100,7 +100,7 @@ void setup() {
   tft.setRotation(2);
   tft.fillScreen(TFT_BLACK);
 
-  //tft.setFreeFont(&ArialRoundedMTBold_14);
+ 
   tft.setTextFont(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_DARKGREY, TFT_BLACK);
@@ -313,14 +313,7 @@ void drawTime() {
  
 void drawEZO() {
   tft.fillScreen(TFT_BLACK);
-//  tft.setTextFont(2);
-//  tft.setTextSize(2);           // We are using a size multiplier of 1
-//  tft.setCursor(30, 10);    // Set cursor to x = 30, y = 175
-//  tft.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text colour to white and background to black
-//  tft.println(currentTime);
-  
-  //Title
-  //tft.setTextFont(4);
+
   tft.setFreeFont(FF18);
   tft.setTextSize(1);
   tft.setTextDatum(BC_DATUM);
@@ -344,7 +337,7 @@ void drawEZO() {
   //tft.setTextPadding(tft.textWidth(" 44:44:44 "));  // String width + margin
   tft.drawString(currentTime, 120, 70);
 
-  drawSeparator(30);
+  drawSeparator(25);
   drawSeparator(180);
   tft.setTextPadding(0);
   
@@ -364,13 +357,9 @@ void drawEZO() {
   tft.setFreeFont(FF1);
   //tft.setTextFont(2);
   tft.setTextSize(1);
-  tft.drawString("C ", 220, 240);
+  tft.drawString("C ", 220, 235);
   Blynk.virtualWrite (V1, TEMP_val);
-  //tft.setTextDatum(MR_DATUM);
-  //tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  //tft.setTextPadding(tft.textWidth("test"));
-  //tft.drawString("test", 120, 240);
-
+  
   //PH
   //tft.setFreeFont(&ArialRoundedMTBold_36);
   //tft.setTextFont(2);
@@ -380,7 +369,7 @@ void drawEZO() {
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
   tft.setTextPadding(0); // Reset padding width to none
   tft.drawString("PH", 0, 280);
-  tft.setTextDatum(BL_DATUM);
+  //tft.setTextDatum(BL_DATUM);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   //tft.setTextPadding(tft.textWidth(" 3.777 "));
   tft.drawString(PH_val, 200, 280);
