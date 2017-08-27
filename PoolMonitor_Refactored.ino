@@ -1,30 +1,9 @@
-/**The MIT License (MIT)
-  Copyright (c) 2015 by Daniel Eichhorn
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYBR_DATUM HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-  
+// This code uses wifi manageer to autoselect a pre-saved Access point or use captive portal 
+// it also allows you to swtich between local and cloud server's
 
-  tft lib Adapted by Bodmer to use the faster TFT_ILI9341_ESP library:
-  https://github.com/Bodmer/TFT_ILI9341_ESP
-
-  Parts of PH and EZO code taken from WhiteBox Labs -- Tentacle Shield -- examples
-
-  Adapted by DJS to be used as pool monitor 2017, including PH and ORP sensors
-  and water temperature.
-*/
+// todo:
+// - try auto switchover based on connection attempts
+// 
 
 #define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
@@ -46,6 +25,7 @@
 #include <DallasTemperature.h>                  // Helper for watertemp sensor
 #include <Ticker.h>                             // Timer for watchdog 
 #include <TimeLib.h>
+#include "Free_Fonts.h"
 
 // Additional UI functions
 //#include "GfxUi.h"
@@ -121,7 +101,7 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
 
   //tft.setFreeFont(&ArialRoundedMTBold_14);
-  tft.setTextFont(3);
+  tft.setTextFont(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_DARKGREY, TFT_BLACK);
   tft.drawString("Gebouwd door DJS 2017", 120, 240);
@@ -311,7 +291,7 @@ void drawData() {
  ***********************************************************************************************/
 void drawTime() {
   //tft.setFreeFont(&ArialRoundedMTBold_14);
-//  tft.setTextFont(3);
+//  tft.setTextFont(2);
 //  
 //  tft.setTextDatum(BC_DATUM);
 //  tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -319,7 +299,7 @@ void drawTime() {
 //  tft.drawString(currentDate, 120, 14);
 //
 //  //tft.setFreeFont(&ArialRoundedMTBold_36);
-//  tft.setTextFont(3);
+//  tft.setTextFont(2);
 //  
 //  tft.setTextDatum(BC_DATUM);
 //  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
@@ -333,21 +313,22 @@ void drawTime() {
  
 void drawEZO() {
   tft.fillScreen(TFT_BLACK);
-//  tft.setTextFont(3);
+//  tft.setTextFont(2);
 //  tft.setTextSize(2);           // We are using a size multiplier of 1
 //  tft.setCursor(30, 10);    // Set cursor to x = 30, y = 175
 //  tft.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text colour to white and background to black
 //  tft.println(currentTime);
   
   //Title
-  tft.setTextFont(3);
-  tft.setTextSize(2);
+  //tft.setTextFont(4);
+  tft.setFreeFont(FF18);
+  tft.setTextSize(1);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_BLUE, TFT_BLACK);
   tft.setTextPadding(tft.textWidth("Pool Monitor"));
   tft.drawString("Pool Monitor", 120, 20);
 
-//  tft.setTextFont(3);
+//  tft.setTextFont(2);
 //  tft.setTextSize(2);
 //  tft.setTextDatum(BC_DATUM);
 //  tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -355,7 +336,8 @@ void drawEZO() {
 //  tft.drawString(currentDate, 120, 60);
 
   
-  tft.setTextFont(3);
+  //tft.setTextFont(2);
+  tft.setFreeFont(FF18);
   tft.setTextSize(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
@@ -370,7 +352,7 @@ void drawEZO() {
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
   tft.setTextPadding(0); // Reset padding width to none
-  tft.setTextSize(2);
+  tft.setTextSize(1);
   tft.drawString("Temp ", 0, 240);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextPadding(tft.textWidth("-88.00`"));
@@ -379,9 +361,10 @@ void drawEZO() {
   tft.drawString(TEMP_val, 200, 240);
   tft.setTextDatum(BL_DATUM);
   tft.setTextPadding(0);
-  tft.setTextFont(3);
+  tft.setFreeFont(FF1);
+  //tft.setTextFont(2);
   tft.setTextSize(1);
-  tft.drawString("C ", 221, 240);
+  tft.drawString("C ", 220, 240);
   Blynk.virtualWrite (V1, TEMP_val);
   //tft.setTextDatum(MR_DATUM);
   //tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -390,8 +373,9 @@ void drawEZO() {
 
   //PH
   //tft.setFreeFont(&ArialRoundedMTBold_36);
-  tft.setTextFont(3);
-  tft.setTextSize(2);
+  //tft.setTextFont(2);
+  tft.setFreeFont(FF18);
+  tft.setTextSize(1);
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
   tft.setTextPadding(0); // Reset padding width to none
@@ -405,7 +389,7 @@ void drawEZO() {
   //ORP
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
-  tft.setTextSize(2);
+  tft.setTextSize(1);
   tft.setTextPadding(0); // Reset padding width to none
   tft.drawString("ORP", 0, 315);
   tft.setTextDatum(BR_DATUM);
@@ -414,9 +398,10 @@ void drawEZO() {
   tft.drawString(ORP_val, 200, 315);
   tft.setTextDatum(BL_DATUM);
   tft.setTextPadding(0);
-    tft.setTextFont(3);
+  tft.setFreeFont(FF1);
+  //  tft.setTextFont(2);
   tft.setTextSize(1);
-  tft.drawString("mV", 230, 310);
+  tft.drawString("mV", 220, 315);
   Blynk.virtualWrite (V3, ORP_val);
   //Cleanup for next string
   tft.setTextPadding(0); // Reset padding width to none
