@@ -100,7 +100,7 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
 
   //tft.setFreeFont(&ArialRoundedMTBold_14);
-  tft.setTextFont(2);
+  tft.setTextFont(3);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_DARKGREY, TFT_BLACK);
   tft.drawString("Gebouwd door DJS 2017", 120, 240);
@@ -290,7 +290,7 @@ void drawData() {
  ***********************************************************************************************/
 void drawTime() {
   //tft.setFreeFont(&ArialRoundedMTBold_14);
-//  tft.setTextFont(2);
+//  tft.setTextFont(3);
 //  
 //  tft.setTextDatum(BC_DATUM);
 //  tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -298,7 +298,7 @@ void drawTime() {
 //  tft.drawString(currentDate, 120, 14);
 //
 //  //tft.setFreeFont(&ArialRoundedMTBold_36);
-//  tft.setTextFont(2);
+//  tft.setTextFont(3);
 //  
 //  tft.setTextDatum(BC_DATUM);
 //  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
@@ -312,21 +312,21 @@ void drawTime() {
  
 void drawEZO() {
   tft.fillScreen(TFT_BLACK);
-//  tft.setTextFont(2);
+//  tft.setTextFont(3);
 //  tft.setTextSize(2);           // We are using a size multiplier of 1
 //  tft.setCursor(30, 10);    // Set cursor to x = 30, y = 175
 //  tft.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text colour to white and background to black
 //  tft.println(currentTime);
   
   //Title
-  tft.setTextFont(2);
+  tft.setTextFont(3);
   tft.setTextSize(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_BLUE, TFT_BLACK);
   tft.setTextPadding(tft.textWidth("Pool Monitor"));
   tft.drawString("Pool Monitor", 120, 20);
 
-//  tft.setTextFont(2);
+//  tft.setTextFont(3);
 //  tft.setTextSize(2);
 //  tft.setTextDatum(BC_DATUM);
 //  tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -334,7 +334,7 @@ void drawEZO() {
 //  tft.drawString(currentDate, 120, 60);
 
   
-  tft.setTextFont(2);
+  tft.setTextFont(3);
   tft.setTextSize(2);
   tft.setTextDatum(BC_DATUM);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
@@ -358,7 +358,7 @@ void drawEZO() {
   tft.drawString(TEMP_val, 200, 240);
   tft.setTextDatum(BL_DATUM);
   tft.setTextPadding(0);
-  tft.setTextFont(2);
+  tft.setTextFont(3);
   tft.setTextSize(1);
   tft.drawString("C ", 221, 240);
   Blynk.virtualWrite (V1, TEMP_val);
@@ -369,7 +369,7 @@ void drawEZO() {
 
   //PH
   //tft.setFreeFont(&ArialRoundedMTBold_36);
-  tft.setTextFont(2);
+  tft.setTextFont(3);
   tft.setTextSize(2);
   tft.setTextDatum(BR_DATUM);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
@@ -393,7 +393,7 @@ void drawEZO() {
   tft.drawString(ORP_val, 200, 315);
   tft.setTextDatum(BL_DATUM);
   tft.setTextPadding(0);
-    tft.setTextFont(2);
+    tft.setTextFont(3);
   tft.setTextSize(1);
   tft.drawString("mV", 230, 310);
   Blynk.virtualWrite (V3, ORP_val);
@@ -585,7 +585,7 @@ BLYNK_WRITE(V11){
    if (cmdCalORP == 1) {
     channel = 0;
     strcpy(command_string, ScmdCalORP);
-    //send_command();
+    send_command();
    }
 }
 BLYNK_WRITE(V12){
@@ -593,7 +593,7 @@ BLYNK_WRITE(V12){
     if (cmdCalPH7 == 1) {
     channel = 1;
     strcpy(command_string, ScmdCalPH7);
-    //send_command();  
+    send_command();  
       }
 } 
 BLYNK_WRITE(V13){
@@ -601,7 +601,7 @@ BLYNK_WRITE(V13){
     if (cmdCalPH4 == 1) {
     channel = 1;
     strcpy(command_string, ScmdCalPH4);
-    //send_command();  
+    send_command();  
       }
 } 
 
@@ -610,7 +610,7 @@ BLYNK_WRITE(V15){
     if (cmdCalCORP == 1) {
     channel = 1;
     strcpy(command_string, ScmdCalCORP);
-    //send_command();  
+    send_command();  
       }
 } 
 BLYNK_WRITE(V16){
@@ -618,7 +618,7 @@ BLYNK_WRITE(V16){
     if (cmdCalCPH == 1) {
     channel = 1;
     strcpy(command_string, ScmdCalCPH);
-    //send_command();  
+    send_command();  
       }
 } 
 BLYNK_WRITE(V17){
@@ -630,8 +630,12 @@ BLYNK_WRITE(V17){
     terminal.print("Sending temp to compensate: ");
     terminal.print(TEMP_val);
     terminal.print("\n");
-    //send_command();  
+    send_command();  
       }
+} 
+BLYNK_WRITE(V18){
+    terminal.println("Sending reset command to ESP ");
+    ESP.reset();
 } 
 BLYNK_WRITE(InternalPinRTC) {
   long t = param.asLong();
