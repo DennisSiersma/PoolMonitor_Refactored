@@ -26,6 +26,7 @@
 #include <Ticker.h>                             // Timer for watchdog 
 #include <TimeLib.h>
 #include "Free_Fonts.h"
+#include <SparkFunSX1509.h> // Include SX1509 library
 
 // Additional UI functions
 //#include "GfxUi.h"
@@ -76,6 +77,9 @@ WidgetTerminal terminal(V10);
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 TFT_ILI9341_ESP tft = TFT_ILI9341_ESP();       // Invoke custom library
+const byte SX1509_ADDRESS = 0x3E;  // SX1509 I2C address (00)
+SX1509 io; // Create an SX1509 object
+
 
 String inputString = "";
 
@@ -95,7 +99,8 @@ void setup() {
   Serial.println("\n Starting");
   Wire.begin();                                                               // enable I2C port.
   sensors.begin();                                                            // IC Default 9 bit. If you have troubles consider upping it 12. Ups the delay giving the IC more time to process the temperature measurement
-  
+  io.begin(SX1509_ADDRESS);                                                   // SX1509 expansion board, esp8266 is all out of ports
+                                                                              // https://learn.sparkfun.com/tutorials/sx1509-io-expander-breakout-hookup-guide?_ga=2.35087590.674449253.1503927846-219350922.1502465066
   tft.begin();
   tft.setRotation(2);
   tft.fillScreen(TFT_BLACK);
